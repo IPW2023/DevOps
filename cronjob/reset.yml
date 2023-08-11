@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: reset
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: reset
+            image: ipworkshop/number_reset:1.1
+            env:
+              - name: REDIS_HOST
+                value: database
+          restartPolicy: Never
